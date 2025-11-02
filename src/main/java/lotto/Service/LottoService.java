@@ -7,9 +7,20 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LottoService {
+    private List<Lotto> lottos = new ArrayList<>();
+
+    public List<Lotto> getLottos() {
+        return lottos;
+    }
+
+    public void addLottos(Lotto lotto) {
+        lottos.add(lotto);
+    }
+
     public int calculateAmountOfLottos(int amountOfMoney) {
         return amountOfMoney / 1000;
     }
@@ -43,4 +54,6 @@ public class LottoService {
 
         return LottoRank.FAIL;
     }
+
+
 }
