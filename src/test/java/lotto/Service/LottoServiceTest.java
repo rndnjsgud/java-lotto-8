@@ -31,7 +31,7 @@ class LottoServiceTest {
     void 랜덤한_숫자를_이용하여_로또를_생성(){
         //given
         //when
-        Lotto lotto = createLotto();
+        Lotto lotto = lottoService.creatLotto();
         //then
         assertThat(lotto).isNotNull();
     }
