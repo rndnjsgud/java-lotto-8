@@ -100,4 +100,16 @@ class LottoServiceTest {
         //then
         assertThat(winningPrizeAmount).isEqualTo(2_031_555_000);
     }
+
+    @DisplayName("수익률을 계산하는 기능")
+    @Test
+    void 수익률을_계산하는_기능() {
+        //given
+        int amountOfMoney = 5_000;
+        int winningPrizeAmount =1_555_000;
+        //when
+        double earningRate = calculateEarningRate(winningPrizeAmount, amountOfMoney);
+        //then
+        assertThat(earningRate).isEqualTo(31100);
+    }
 }
