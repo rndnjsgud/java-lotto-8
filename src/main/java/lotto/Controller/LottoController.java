@@ -1,6 +1,7 @@
 package lotto.Controller;
 
 import camp.nextstep.edu.missionutils.Console;
+import lotto.Domain.Lotto;
 import lotto.Domain.LottoRanks;
 import lotto.Service.LottoService;
 import lotto.View.InputView;
@@ -18,7 +19,14 @@ public class LottoController {
 
     public int inputPurchaseMoneyAmount() {
         InputView.inputMoneyAmount();
-        return Integer.parseInt(Console.readLine());
+        int amountOfMoney = Integer.parseInt(Console.readLine());
+        if(amountOfMoney < 1000){
+            throw new IllegalArgumentException("[ERROR] 구입 금액은 1000원보다 커야 합니다.");
+        }
+        if(amountOfMoney % 1000 != 0){
+            throw new IllegalArgumentException("[ERROR] 구입 금액은 1000원 단위여야 합니다.");
+        }
+        return amountOfMoney;
     }
 
     public void createLottos(int moneyAmount) {
@@ -27,6 +35,7 @@ public class LottoController {
         for (int i = 0; i < amountOfLottos; i++) {
             lottoService.creatLotto();
         }
+        OutputView.purchaseResultOutput(amountOfLottos, lottoService.getLottos());
     }
 
     public List<Integer> inputWinningNumbers() {
@@ -38,15 +47,33 @@ public class LottoController {
                 .map(Integer::parseInt)
                 .toList();
 
+        Lotto lotto = new Lotto(winningNumbers);
+
         return winningNumbers;
     }
 
-    public int inputBonusNumber(){
+    public int inputBonusNumber(List<Integer> winningNumbers){
         InputView.inputBonusNumber();
-        return Integer.parseInt(Console.readLine());
+        int bonusNumber = Integer.parseInt(Console.readLine());
+        if(bonusNumber < 1 ||  bonusNumber > 45){
+            throw new IllegalArgumentException("[ERROR] 보너스 숫자는 1~45 이내여야 합니다.");
+        }
+        if(winningNumbers.contains(bonusNumber)){
+            throw new IllegalArgumentException("[ERROR] 보너스 숫자는 당첨 번호와 중복될 수 없습니다.");
+        }
+        return bonusNumber;
     }
 
-    public LottoRanks checkLottoWinning(List<Integer> winningNumber, int bonusNumber){
-        return lottoService.checkLottoWinningResult(winningNumber, bonusNumber);
+    public void printLottoResult(List<Integer> winningNumber, int bonusNumber){
+        LottoRanks lottoRanks = lottoService.checkLottoWinningResult(winningNumber, bonusNumber);
+        OutputView.totalResultOutput(lottoRanks);
+    }
+
+    public void printEarningRate(List<Integer> winningNumber, int bonusNumber, int amountOfMoney){
+        int winningPrizeAmount = lottoService.calculateLottoWinningPrize(winningNumber, bonusNumber);
+
+        double earningRate = lottoService.calculateEarningRate(winningPrizeAmount, amountOfMoney);
+
+        OutputView.earningRateOutput(earningRate);
     }
 }
