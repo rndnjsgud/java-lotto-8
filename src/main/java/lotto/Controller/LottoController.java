@@ -11,8 +11,18 @@ public class LottoController {
         this.lottoService = lottoService;
     }
 
-    public int inputPurchaseMoneyAmount(){
+    public int inputPurchaseMoneyAmount() {
         InputView.inputMoneyAmount();
         return Integer.parseInt(Console.readLine());
     }
+
+    public void createLottos(int moneyAmount) {
+        int amountOfLottos = lottoService.calculateAmountOfLottos(moneyAmount);
+
+        for (int i = 0; i < amountOfLottos; i++) {
+            lottoService.creatLotto();
+        }
+    }
+
+
 }
