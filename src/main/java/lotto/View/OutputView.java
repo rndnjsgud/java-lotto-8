@@ -20,16 +20,13 @@ public class OutputView {
 
         Arrays.stream(LottoRank.values())
                 .forEach(lottoRank -> {
-                    int count = lottoRanks
-                            .getLottoRanks()
+                    int count = lottoRanks.getLottoRanks()
                             .getOrDefault(lottoRank, 0);
                     if(lottoRank.getPrize() != 30000000) {
-                        System.out.printf("%d개 일치 (%,d원) - %d개,", lottoRank.getLottoNumberMatchingCount()
-                                , lottoRank.getPrize(), count);
+                        System.out.printf("%d개 일치 (%,d원) - %d개,", lottoRank.getLottoNumberMatchingCount(), lottoRank.getPrize(), count);
                     }
                     else if(lottoRank.getPrize() == 30000000){
-                        System.out.printf("%d개 일치, 보너스 볼 일치 (%,d원) - %d개,", lottoRank.getLottoNumberMatchingCount()
-                                , lottoRank.getPrize(), count);
+                        System.out.printf("%d개 일치, 보너스 볼 일치 (%,d원) - %d개,", lottoRank.getLottoNumberMatchingCount(), lottoRank.getPrize(), count);
                     }
                     System.out.println();
                 });
