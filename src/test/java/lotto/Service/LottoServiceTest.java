@@ -15,7 +15,7 @@ class LottoServiceTest {
         //given
         int amountOfMoney = 8430;
         //when
-        int amountOfLottos = lottoService.calculatrAmountOfLottos(amountOfMoney);
+        int amountOfLottos = lottoService.calculateAmountOfLottos(amountOfMoney);
         //then
         Assertions.assertThat(amountOfLottos).isEqualTo(8);
     }
