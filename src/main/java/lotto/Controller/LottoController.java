@@ -3,6 +3,10 @@ package lotto.Controller;
 import camp.nextstep.edu.missionutils.Console;
 import lotto.Service.LottoService;
 import lotto.View.InputView;
+import lotto.View.OutputView;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class LottoController {
     private final LottoService lottoService;
@@ -24,5 +28,15 @@ public class LottoController {
         }
     }
 
+    public List<Integer> inputWinningNumbers(){
+        InputView.inputWinningNumbers();
+        String winningNumbersInput = Console.readLine();
 
+        List<Integer> winningNumbers = Arrays.stream(winningNumbersInput.split(","))
+                .map(String::trim)
+                .map(Integer::parseInt)
+                .toList();
+
+        return winningNumbers;
+    }
 }
