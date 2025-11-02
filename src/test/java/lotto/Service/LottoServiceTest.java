@@ -4,6 +4,7 @@ import camp.nextstep.edu.missionutils.Randoms;
 import lotto.Domain.Lotto;
 import lotto.Domain.LottoRank;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,12 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LottoServiceTest {
-    private LottoService lottoService = new LottoService();
+    private LottoService lottoService;
+
+    @BeforeEach
+    public void beforeEach(){
+        lottoService = new LottoService();
+    }
 
     @DisplayName("입력받은 금액을 이용하여 구매할 로또의 갯수를 계산하는 기능")
     @Test
@@ -32,9 +38,9 @@ class LottoServiceTest {
     void 랜덤한_숫자를_이용하여_로또를_생성() {
         //given
         //when
-        Lotto lotto = lottoService.creatLotto();
+        lottoService.creatLotto();
         //then
-        assertThat(lotto).isNotNull();
+        assertThat(lottoService.getLottos().size()).isEqualTo(1);
     }
 
     /*
@@ -74,30 +80,24 @@ class LottoServiceTest {
     }
     */
 
-    @DisplayName("로또 당첨 등수 확인하는 기능")
+    @DisplayName("로또 당첨 액수를 확인하는 기능")
     @Test
-    void 로또_당첨_등수_확인하는_기능() {
+    void 로또_당첨_액수를_확인하는_기능() {
         //given
         List<Integer> winningNumber = new ArrayList<Integer>(List.of(1, 2, 3, 4, 5, 6));
         int bonusNumber = 7;
+        int winningPrizeAmount = 0;
 
-        Lotto firstPrizeWinningLotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
-        Lotto secondPrizeWinningLotto = new Lotto(List.of(1, 2, 3, 4, 5, 7));
-        Lotto thirdPrizeWinningLotto = new Lotto(List.of(1, 2, 3, 4, 5, 8));
-        Lotto fourthPrizeWinningLotto = new Lotto(List.of(1, 2, 3, 4, 8, 9));
-        Lotto fifthPrizeWinningLotto = new Lotto(List.of(1, 2, 3, 8, 9, 10));
+        lottoService.addLottos(new Lotto(List.of(1, 2, 3, 4, 5, 6)));
+        lottoService.addLottos(new Lotto(List.of(1, 2, 3, 4, 5, 7)));
+        lottoService.addLottos(new Lotto(List.of(1, 2, 3, 4, 5, 8)));
+        lottoService.addLottos(new Lotto(List.of(1, 2, 3, 4, 8, 9)));
+        lottoService.addLottos(new Lotto(List.of(1, 2, 3, 8, 9, 10)));
+
         //when
-        LottoRank firstLottoRank = lottoService.checkLottoWinningPrize(firstPrizeWinningLotto, winningNumber, bonusNumber);
-        LottoRank secondLottoRank = lottoService.checkLottoWinningPrize(secondPrizeWinningLotto, winningNumber, bonusNumber);
-        LottoRank thirdLottoRank = lottoService.checkLottoWinningPrize(thirdPrizeWinningLotto, winningNumber, bonusNumber);
-        LottoRank fourthLottoRank = lottoService.checkLottoWinningPrize(fourthPrizeWinningLotto, winningNumber, bonusNumber);
-        LottoRank fifthLottoRank = lottoService.checkLottoWinningPrize(fifthPrizeWinningLotto, winningNumber, bonusNumber);
+        winningPrizeAmount = lottoService.checkLottoWinningPrize(winningNumber, bonusNumber);
 
         //then
-        assertThat(firstLottoRank).isEqualTo(LottoRank.FIRST);
-        assertThat(secondLottoRank).isEqualTo(LottoRank.SECOND);
-        assertThat(thirdLottoRank).isEqualTo(LottoRank.THIRD);
-        assertThat(fourthLottoRank).isEqualTo(LottoRank.FOURTH);
-        assertThat(fifthLottoRank).isEqualTo(LottoRank.FIFTH);
+        assertThat(winningPrizeAmount).isEqualTo(2_031_555_000);
     }
 }
