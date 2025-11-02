@@ -23,9 +23,9 @@ public class Application {
                 System.out.println(e.getMessage());
             }
         }
+        lottoController.createLottos(amountOfMoney);
         while (true) {
             try {
-                lottoController.createLottos(amountOfMoney);
                 winningNumbers = lottoController.inputWinningNumbers();
                 break;
             } catch (IllegalArgumentException e) {
