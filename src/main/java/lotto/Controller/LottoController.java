@@ -20,10 +20,10 @@ public class LottoController {
     public int inputPurchaseMoneyAmount() {
         InputView.inputMoneyAmount();
         int amountOfMoney = Integer.parseInt(Console.readLine());
-        if(amountOfMoney < 1000){
+        if (amountOfMoney < 1000) {
             throw new IllegalArgumentException("[ERROR] 구입 금액은 1000원보다 커야 합니다.");
         }
-        if(amountOfMoney % 1000 != 0){
+        if (amountOfMoney % 1000 != 0) {
             throw new IllegalArgumentException("[ERROR] 구입 금액은 1000원 단위여야 합니다.");
         }
         return amountOfMoney;
@@ -52,24 +52,24 @@ public class LottoController {
         return winningNumbers;
     }
 
-    public int inputBonusNumber(List<Integer> winningNumbers){
+    public int inputBonusNumber(List<Integer> winningNumbers) {
         InputView.inputBonusNumber();
         int bonusNumber = Integer.parseInt(Console.readLine());
-        if(bonusNumber < 1 ||  bonusNumber > 45){
+        if (bonusNumber < 1 || bonusNumber > 45) {
             throw new IllegalArgumentException("[ERROR] 보너스 숫자는 1~45 이내여야 합니다.");
         }
-        if(winningNumbers.contains(bonusNumber)){
+        if (winningNumbers.contains(bonusNumber)) {
             throw new IllegalArgumentException("[ERROR] 보너스 숫자는 당첨 번호와 중복될 수 없습니다.");
         }
         return bonusNumber;
     }
 
-    public void printLottoResult(List<Integer> winningNumber, int bonusNumber){
+    public void printLottoResult(List<Integer> winningNumber, int bonusNumber) {
         LottoRanks lottoRanks = lottoService.checkLottoWinningResult(winningNumber, bonusNumber);
         OutputView.totalResultOutput(lottoRanks);
     }
 
-    public void printEarningRate(List<Integer> winningNumber, int bonusNumber, int amountOfMoney){
+    public void printEarningRate(List<Integer> winningNumber, int bonusNumber, int amountOfMoney) {
         int winningPrizeAmount = lottoService.calculateLottoWinningPrize(winningNumber, bonusNumber);
 
         double earningRate = lottoService.calculateEarningRate(winningPrizeAmount, amountOfMoney);

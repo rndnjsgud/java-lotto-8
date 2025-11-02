@@ -27,7 +27,7 @@ public class LottoService {
 
     public void creatLotto() {
         List<Integer> randomNumbers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
-            lottos.add(new Lotto(randomNumbers));
+        lottos.add(new Lotto(randomNumbers));
     }
 
     private int matchLottoNumberWithWinningNumber(Lotto lotto, List<Integer> winningNumbers) {
@@ -44,11 +44,11 @@ public class LottoService {
 
     public LottoRanks checkLottoWinningResult(List<Integer> winningNumber, int bonusNumber) {
         LottoRanks lottoRanks = new LottoRanks();
-        for(Lotto lotto : lottos) {
+        for (Lotto lotto : lottos) {
             int lottoNumberMatchingCount = matchLottoNumberWithWinningNumber(lotto, winningNumber);
             boolean isBonusNumberInLotto = checkBonusNumber(lotto, bonusNumber);
 
-            if (lottoNumberMatchingCount == 6)  lottoRanks.addRank(LottoRank.FIRST);
+            if (lottoNumberMatchingCount == 6) lottoRanks.addRank(LottoRank.FIRST);
             else if (lottoNumberMatchingCount == 5 && isBonusNumberInLotto) lottoRanks.addRank(LottoRank.SECOND);
             else if (lottoNumberMatchingCount == 5) lottoRanks.addRank(LottoRank.THIRD);
             else if (lottoNumberMatchingCount == 4) lottoRanks.addRank(LottoRank.FOURTH);
@@ -57,7 +57,7 @@ public class LottoService {
         return lottoRanks;
     }
 
-    public int calculateLottoWinningPrize(List<Integer> winningNumber, int bonusNumber){
+    public int calculateLottoWinningPrize(List<Integer> winningNumber, int bonusNumber) {
         LottoRanks lottoRanks = checkLottoWinningResult(winningNumber, bonusNumber);
         int winningPrizeAmount = 0;
 
@@ -71,8 +71,8 @@ public class LottoService {
         return winningPrizeAmount;
     }
 
-    public double calculateEarningRate(int winningPrizeAmount, int amountOfMoney){
-        double earningRate = (double) winningPrizeAmount /amountOfMoney*100;
+    public double calculateEarningRate(int winningPrizeAmount, int amountOfMoney) {
+        double earningRate = (double) winningPrizeAmount / amountOfMoney * 100;
         earningRate = Math.round(earningRate * 100.0) / 100.0;
         return earningRate;
     }

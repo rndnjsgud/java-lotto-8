@@ -18,7 +18,7 @@ class LottoServiceTest {
     private LottoService lottoService;
 
     @BeforeEach
-    public void beforeEach(){
+    public void beforeEach() {
         lottoService = new LottoService();
     }
 
@@ -107,7 +107,7 @@ class LottoServiceTest {
     void 수익률을_계산하는_기능() {
         //given
         int amountOfMoney = 5_000;
-        int winningPrizeAmount =1_555_000;
+        int winningPrizeAmount = 1_555_000;
         //when
         double earningRate = lottoService.calculateEarningRate(winningPrizeAmount, amountOfMoney);
         //then
