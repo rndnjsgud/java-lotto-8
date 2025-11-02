@@ -42,7 +42,7 @@ public class LottoService {
                 .contains(bonusNumber);
     }
 
-    private LottoRanks checkLottoWinningResult(List<Integer> winningNumber, int bonusNumber) {
+    public LottoRanks checkLottoWinningResult(List<Integer> winningNumber, int bonusNumber) {
         LottoRanks lottoRanks = new LottoRanks();
         for(Lotto lotto : lottos) {
             int lottoNumberMatchingCount = matchLottoNumberWithWinningNumber(lotto, winningNumber);

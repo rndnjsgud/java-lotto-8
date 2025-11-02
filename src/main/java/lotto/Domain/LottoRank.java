@@ -22,10 +22,6 @@ public enum LottoRank {
         return lottoNumberMatchingCount;
     }
 
-    public boolean isBonusNumberInLotto() {
-        return isBonusNumberInLotto;
-    }
-
     public int getPrize() {
         return prize;
     }
