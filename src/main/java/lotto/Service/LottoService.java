@@ -25,9 +25,9 @@ public class LottoService {
         return amountOfMoney / 1000;
     }
 
-    public Lotto creatLotto() {
+    public void creatLotto() {
         List<Integer> randomNumbers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
-        return new Lotto(randomNumbers);
+            lottos.add(new Lotto(randomNumbers));
     }
 
     private int matchLottoNumberWithWinningNumber(Lotto lotto, List<Integer> winningNumbers) {
@@ -42,18 +42,18 @@ public class LottoService {
                 .contains(bonusNumber);
     }
 
-    public LottoRank checkLottoWinningPrize(Lotto lotto, List<Integer> winningNumber, int bonusNumber) {
-        int lottoNumberMatchingCount = matchLottoNumberWithWinningNumber(lotto, winningNumber);
-        boolean isBonusNumberInLotto = checkBonusNumber(lotto, bonusNumber);
+    public int checkLottoWinningPrize(List<Integer> winningNumber, int bonusNumber) {
+        int winningPrizeAmount = 0;
+        for(Lotto lotto : lottos) {
+            int lottoNumberMatchingCount = matchLottoNumberWithWinningNumber(lotto, winningNumber);
+            boolean isBonusNumberInLotto = checkBonusNumber(lotto, bonusNumber);
 
-        if (lottoNumberMatchingCount == 6) return LottoRank.FIRST;
-        if (lottoNumberMatchingCount == 5 && isBonusNumberInLotto) return LottoRank.SECOND;
-        if (lottoNumberMatchingCount == 5) return LottoRank.THIRD;
-        if (lottoNumberMatchingCount == 4) return LottoRank.FOURTH;
-        if (lottoNumberMatchingCount == 3) return LottoRank.FIFTH;
-
-        return LottoRank.FAIL;
+            if (lottoNumberMatchingCount == 6)  winningPrizeAmount += LottoRank.FIRST.getPrize();
+            else if (lottoNumberMatchingCount == 5 && isBonusNumberInLotto) winningPrizeAmount += LottoRank.SECOND.getPrize();
+            else if (lottoNumberMatchingCount == 5) winningPrizeAmount += LottoRank.THIRD.getPrize();
+            else if (lottoNumberMatchingCount == 4) winningPrizeAmount += LottoRank.FOURTH.getPrize();
+            else if (lottoNumberMatchingCount == 3) winningPrizeAmount += LottoRank.FIFTH.getPrize();
+        }
+        return winningPrizeAmount;
     }
-
-
 }
