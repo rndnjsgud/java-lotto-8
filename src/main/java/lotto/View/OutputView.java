@@ -13,7 +13,7 @@ public class OutputView {
         });
     }
 
-    public static void TotalResultOutput(LottoRanks lottoRanks){
+    public static void totalResultOutput(LottoRanks lottoRanks){
         System.out.println("당첨 통계\n" + "---");
 
         lottoRanks.getLottoRanks()
@@ -23,5 +23,9 @@ public class OutputView {
                                 +String.format("%,d", lottoRank.getPrize()) + "원) - " +count + "개");
                     }
                 });
+    }
+
+    public static void earningRateOutput(double earningRate){
+        System.out.println("총 수익률은 " + earningRate + "% 입니다.");
     }
 }
