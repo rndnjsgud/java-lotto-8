@@ -18,6 +18,10 @@ public class Lotto {
         if (numbers.size() > new HashSet<>(numbers).size()) {
             throw new IllegalArgumentException("[ERROR] 로또 번호는 중복될 수 없습니다.");
         }
+        if(numbers.stream()
+                .anyMatch(n -> n < 1 || n > 45)){
+            throw new IllegalArgumentException("[ERROR] 로또 번호는 1~45 사이여야 합니다.");
+        }
     }
 
     // TODO: 추가 기능 구현
