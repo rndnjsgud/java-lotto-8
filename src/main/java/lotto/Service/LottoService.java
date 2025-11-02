@@ -2,6 +2,7 @@ package lotto.Service;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import lotto.Domain.Lotto;
+import lotto.Domain.LottoRank;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,15 +19,28 @@ public class LottoService {
         return new Lotto(randomNumbers);
     }
 
-    public int matchLottoNumberWithWinningNumber(Lotto lotto, List<Integer> winningNumbers){
-        return (int)lotto.getNumbers()
+    private int matchLottoNumberWithWinningNumber(Lotto lotto, List<Integer> winningNumbers) {
+        return (int) lotto.getNumbers()
                 .stream()
                 .filter(winningNumbers::contains)
                 .count();
     }
 
-    public boolean checkBonusNumber(Lotto lotto, int bonusNumber){
+    private boolean checkBonusNumber(Lotto lotto, int bonusNumber) {
         return lotto.getNumbers()
                 .contains(bonusNumber);
+    }
+
+    public LottoRank checkLottoWinningPrize(Lotto lotto, List<Integer> winningNumber, int bonusNumber) {
+        int lottoNumberMatchingCount = matchLottoNumberWithWinningNumber(lotto, winningNumber);
+        boolean isBonusNumberInLotto = checkBonusNumber(lotto, bonusNumber);
+
+        if (lottoNumberMatchingCount == 6) return LottoRank.FIRST;
+        if (lottoNumberMatchingCount == 5 && isBonusNumberInLotto) return LottoRank.SECOND;
+        if (lottoNumberMatchingCount == 5) return LottoRank.THIRD;
+        if (lottoNumberMatchingCount == 4) return LottoRank.FOURTH;
+        if (lottoNumberMatchingCount == 3) return LottoRank.FIFTH;
+
+        return LottoRank.FAIL;
     }
 }
