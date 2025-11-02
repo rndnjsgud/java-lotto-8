@@ -108,7 +108,7 @@ class LottoServiceTest {
         int amountOfMoney = 5_000;
         int winningPrizeAmount =1_555_000;
         //when
-        double earningRate = calculateEarningRate(winningPrizeAmount, amountOfMoney);
+        double earningRate = lottoService.calculateEarningRate(winningPrizeAmount, amountOfMoney);
         //then
         assertThat(earningRate).isEqualTo(31100);
     }

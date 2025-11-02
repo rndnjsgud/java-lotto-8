@@ -56,4 +56,8 @@ public class LottoService {
         }
         return winningPrizeAmount;
     }
+
+    public double calculateEarningRate(int winningPrizeAmount, int amountOfMoney){
+        return (double) winningPrizeAmount /amountOfMoney*100;
+    }
 }
