@@ -1,7 +1,6 @@
 package lotto.Domain;
 
 public enum LottoRank {
-    FAIL(2, false, 0),
     FIFTH(3, false, 5_000),
     FOURTH(4, false, 50_000),
     THIRD(5, false, 1_500_000),
