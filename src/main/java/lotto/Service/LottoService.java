@@ -17,4 +17,11 @@ public class LottoService {
         List<Integer> randomNumbers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
         return new Lotto(randomNumbers);
     }
+
+    public int matchLottoNumberWithWinningNumber(Lotto lotto, List<Integer> winningNumbers){
+        return (int)lotto.getNumbers()
+                .stream()
+                .filter(winningNumbers::contains)
+                .count();
+    }
 }
