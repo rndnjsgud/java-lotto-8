@@ -54,4 +54,21 @@ class LottoServiceTest {
         assertThat(lottoService.matchLottoNumberWithWinningNumber(lotto, fourthPrizeWinningNumber)).isEqualTo(4);
         assertThat(lottoService.matchLottoNumberWithWinningNumber(lotto, fifthPrizeWinningNumber)).isEqualTo(3);
     }
+
+    @DisplayName("보너스 번호 일치 여부 확인하는 기능")
+    @Test
+    void 보너스_번호_일치_여부_확인하는_기능(){
+        //given
+        Lotto lotto1 = new Lotto(List.of(1,2,3,4,5,6));
+        Lotto lotto2 = new Lotto(List.of(2,3,4,5,6,7));
+        int bonusNumber = 1;
+        //when
+        boolean isBonusNumberInLotto1 = lottoService.checkBonusNumber(lotto1, bonusNumber);
+        boolean isBonusNumberInLotto2 = lottoService.checkBonusNumber(lotto2, bonusNumber);
+
+        //then
+        assertThat(isBonusNumberInLotto1).isEqualTo(true);
+        assertThat(isBonusNumberInLotto2).isEqualTo(false);
+
+    }
 }
