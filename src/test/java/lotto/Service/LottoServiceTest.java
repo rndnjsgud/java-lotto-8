@@ -94,8 +94,9 @@ class LottoServiceTest {
         lottoService.addLottos(new Lotto(List.of(1, 2, 3, 4, 8, 9)));
         lottoService.addLottos(new Lotto(List.of(1, 2, 3, 8, 9, 10)));
 
+
         //when
-        winningPrizeAmount = lottoService.checkLottoWinningPrize(winningNumber, bonusNumber);
+        winningPrizeAmount = lottoService.calculateLottoWinningPrize(winningNumber, bonusNumber);
 
         //then
         assertThat(winningPrizeAmount).isEqualTo(2_031_555_000);

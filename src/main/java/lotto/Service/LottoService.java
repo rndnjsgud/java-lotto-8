@@ -3,15 +3,15 @@ package lotto.Service;
 import camp.nextstep.edu.missionutils.Randoms;
 import lotto.Domain.Lotto;
 import lotto.Domain.LottoRank;
+import lotto.Domain.LottoRanks;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class LottoService {
-    private List<Lotto> lottos = new ArrayList<>();
+    private final List<Lotto> lottos = new ArrayList<>();
 
     public List<Lotto> getLottos() {
         return lottos;
@@ -42,18 +42,32 @@ public class LottoService {
                 .contains(bonusNumber);
     }
 
-    public int checkLottoWinningPrize(List<Integer> winningNumber, int bonusNumber) {
-        int winningPrizeAmount = 0;
+    private LottoRanks checkLottoWinningResult(List<Integer> winningNumber, int bonusNumber) {
+        LottoRanks lottoRanks = new LottoRanks();
         for(Lotto lotto : lottos) {
             int lottoNumberMatchingCount = matchLottoNumberWithWinningNumber(lotto, winningNumber);
             boolean isBonusNumberInLotto = checkBonusNumber(lotto, bonusNumber);
 
-            if (lottoNumberMatchingCount == 6)  winningPrizeAmount += LottoRank.FIRST.getPrize();
-            else if (lottoNumberMatchingCount == 5 && isBonusNumberInLotto) winningPrizeAmount += LottoRank.SECOND.getPrize();
-            else if (lottoNumberMatchingCount == 5) winningPrizeAmount += LottoRank.THIRD.getPrize();
-            else if (lottoNumberMatchingCount == 4) winningPrizeAmount += LottoRank.FOURTH.getPrize();
-            else if (lottoNumberMatchingCount == 3) winningPrizeAmount += LottoRank.FIFTH.getPrize();
+            if (lottoNumberMatchingCount == 6)  lottoRanks.addRank(LottoRank.FIRST);
+            else if (lottoNumberMatchingCount == 5 && isBonusNumberInLotto) lottoRanks.addRank(LottoRank.SECOND);
+            else if (lottoNumberMatchingCount == 5) lottoRanks.addRank(LottoRank.THIRD);
+            else if (lottoNumberMatchingCount == 4) lottoRanks.addRank(LottoRank.FOURTH);
+            else if (lottoNumberMatchingCount == 3) lottoRanks.addRank(LottoRank.FIFTH);
         }
+        return lottoRanks;
+    }
+
+    public int calculateLottoWinningPrize(List<Integer> winningNumber, int bonusNumber){
+        LottoRanks lottoRanks = checkLottoWinningResult(winningNumber, bonusNumber);
+        int winningPrizeAmount = 0;
+
+        winningPrizeAmount = lottoRanks.getLottoRanks()
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() > 0)
+                .mapToInt(entry -> entry.getKey().getPrize() * entry.getValue())
+                .sum();
+
         return winningPrizeAmount;
     }
 
