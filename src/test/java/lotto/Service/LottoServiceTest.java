@@ -69,6 +69,25 @@ class LottoServiceTest {
         //then
         assertThat(isBonusNumberInLotto1).isEqualTo(true);
         assertThat(isBonusNumberInLotto2).isEqualTo(false);
+    }
 
+    @DisplayName("로또 당첨 등수 확인하는 기능")
+    @Test
+    void 로또_당첨_등수_확인하는_기능(){
+        //given
+        Lotto lotto = new Lotto(List.of(1,2,3,4,5,6));
+        int bonusNumber = 7;
+        //when
+        List<Integer> firstPrizeWinningNumber = new ArrayList<>(List.of(1,2,3,4,5,6));
+        List<Integer> secondPrizeWinningNumber = new ArrayList<>(List.of(1,2,3,4,5,7));
+        List<Integer> thirdPrizeWinningNumber = new ArrayList<>(List.of(1,2,3,4,5,8));
+        List<Integer> fourthPrizeWinningNumber = new ArrayList<>(List.of(1,2,3,4,8,9));
+        List<Integer> fifthPrizeWinningNumber = new ArrayList<>(List.of(1,2,3,8,9,10));
+        //then
+        assertThat(lottoService.checkLottoWinningPrize(lotto, firstPrizeWinningNumber, bonusNumber)).isEqualTo(1);
+        assertThat(lottoService.checkLottoWinningPrize(lotto, secondPrizeWinningNumber, bonusNumber)).isEqualTo(2);
+        assertThat(lottoService.checkLottoWinningPrize(lotto, thirdPrizeWinningNumber, bonusNumber)).isEqualTo(3);
+        assertThat(lottoService.checkLottoWinningPrize(lotto, fourthPrizeWinningNumber, bonusNumber)).isEqualTo(4);
+        assertThat(lottoService.checkLottoWinningPrize(lotto, fifthPrizeWinningNumber, bonusNumber)).isEqualTo(5);
     }
 }
