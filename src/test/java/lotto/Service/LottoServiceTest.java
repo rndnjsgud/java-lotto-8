@@ -35,4 +35,23 @@ class LottoServiceTest {
         //then
         assertThat(lotto).isNotNull();
     }
+
+    @DisplayName("로또 번호와 당첨번호의 일치 갯수를 확인하는 기능")
+    @Test
+    void 로또_번호와_당첨_번호의_일치_갯수를_확인하는_기능(){
+        //given
+        Lotto lotto = new Lotto(List.of(1,2,3,4,5,6));
+        //when
+        List<Integer> firstPrizeWinningNumber = new ArrayList<>(List.of(1,2,3,4,5,6));
+        List<Integer> secondPrizeWinningNumber = new ArrayList<>(List.of(1,2,3,4,5,7));
+        List<Integer> thirdPrizeWinningNumber = new ArrayList<>(List.of(1,2,3,4,5,8));
+        List<Integer> fourthPrizeWinningNumber = new ArrayList<>(List.of(1,2,3,4,8,9));
+        List<Integer> fifthPrizeWinningNumber = new ArrayList<>(List.of(1,2,3,8,9,10));
+        //then
+        assertThat(lottoService.matchLottoNumberWithWinningNumber(lotto, firstPrizeWinningNumber)).isEqualTo(6);
+        assertThat(lottoService.matchLottoNumberWithWinningNumber(lotto, secondPrizeWinningNumber)).isEqualTo(5);
+        assertThat(lottoService.matchLottoNumberWithWinningNumber(lotto, thirdPrizeWinningNumber)).isEqualTo(5);
+        assertThat(lottoService.matchLottoNumberWithWinningNumber(lotto, fourthPrizeWinningNumber)).isEqualTo(4);
+        assertThat(lottoService.matchLottoNumberWithWinningNumber(lotto, fifthPrizeWinningNumber)).isEqualTo(3);
+    }
 }
