@@ -24,4 +24,9 @@ public class LottoService {
                 .filter(winningNumbers::contains)
                 .count();
     }
+
+    public boolean checkBonusNumber(Lotto lotto, int bonusNumber){
+        return lotto.getNumbers()
+                .contains(bonusNumber);
+    }
 }
