@@ -19,7 +19,12 @@ public class LottoController {
 
     public int inputPurchaseMoneyAmount() {
         InputView.inputMoneyAmount();
-        int amountOfMoney = Integer.parseInt(Console.readLine());
+        String amountOfMoneyInput = Console.readLine();
+        int amountOfMoney = 0;
+        if(!amountOfMoneyInput.matches("\\d+")){
+            throw new IllegalArgumentException("[ERROR] 구입 금액에는 정수만 가능합니다");
+        }
+        amountOfMoney = Integer.parseInt(amountOfMoneyInput);
         if (amountOfMoney < 1000) {
             throw new IllegalArgumentException("[ERROR] 구입 금액은 1000원보다 커야 합니다.");
         }
